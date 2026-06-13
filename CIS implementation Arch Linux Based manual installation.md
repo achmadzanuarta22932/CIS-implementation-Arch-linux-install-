@@ -6,6 +6,8 @@ setelahnya masukan format _mkfs.ext4_ untuk format linux , _mkfs.vfat_ untuk boo
 
 mount dengan penerapan - _rw,nosuid,nodev,noexec,relatime_
 
+untuk root dan var tidak memerlukan noexec akan dapat di baca 
+
 pacstrap /mnt amd-ucode linux-lts linux-lts-headers linux-firmware base docker  neovim lvm2 firewalld pacman which grep sudo curl iwd mkinitcpio
 
 genfstab -U /mnt >> /mnt/etc/fstab 
@@ -57,7 +59,7 @@ touch /etc/cmdline.d/{01-boot.conf,02-misc.conf}
 
 ls /etc/cmdline.d/
 
-echo "rd.luks.name=$(blkid -u UUID -o value /dev/lvmrootpwrtition)=[namadevice] root=/dev/[namavolumegroup]/root" >> /etc/cmdline.d/01-boot.conf
+echo "rd.luks.name=$(blkid -s UUID -o value /dev/lvmrootpwrtition)=[namadevice] root=/dev/[namavolumegroup]/root" >> /etc/cmdline.d/01-boot.conf
 
 cat /etc/cmdline.d/01-boot.conf 
 
